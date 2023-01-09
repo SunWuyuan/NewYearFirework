@@ -268,14 +268,14 @@
             setTimeout(() => {
                 start()
                 fireworks();
-            }, 2000) // 
+            }, 2000) 
             setTimeout(() => {
                 function audioAutoPlay() {
                     var audio = document.getElementById('audioDom');
                     audio.play();
                 }
                 audioAutoPlay();
-            }, 300) // 
+            }, 300) 
             console.log(updateConfig({
                 autoLaunch: true
             }));
@@ -287,14 +287,14 @@
         }
 
         function start() {
-            let str = $("#text").html(); //"于我而言，你是最好且是唯一"
+            let str = $("#text").html(); 
             let str_ = ''
             let i = 0
             let content = document.getElementById('contents')
             let timer = setInterval(() => {
                 if (str_.length < str.length) {
                     str_ += str[i++]
-                    content.innerHTML = '<p>' + str_ + '<span class="xx" style="opacity: 1;    color: white;">∎</span></p>' //打印时加光标
+                    content.innerHTML = '<p>' + str_ + '<span class="xx" style="opacity: 1;    color: white;">_</span></p>'
                 } else {
                     clearInterval(timer)
                     content.innerHTML = '<p>' + str_ + '</p>'
@@ -310,17 +310,9 @@
 </body>
 
 <script type="text/javascript">
-    /**
-    * UTF16和UTF8转换对照表
-    * U+00000000 – U+0000007F 	0xxxxxxx
-    * U+00000080 – U+000007FF 	110xxxxx 10xxxxxx
-    * U+00000800 – U+0000FFFF 	1110xxxx 10xxxxxx 10xxxxxx
-    * U+00010000 – U+001FFFFF 	11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
-    * U+00200000 – U+03FFFFFF 	111110xx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
-    * U+04000000 – U+7FFFFFFF 	1111110x 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
-    */
+
     var Base64 = {
-        // 转码表
+       
         table: [
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
             'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
@@ -336,28 +328,25 @@
             for (var i = 0; i < len; i++) {
                 var code = str.charCodeAt(i);
                 if (code > 0x0000 && code <= 0x007F) {
-                    // 单字节，这里并不考虑0x0000，因为它是空字节
-                    // U+00000000 – U+0000007F 	0xxxxxxx
+                   
                     res.push(str.charAt(i));
                 } else if (code >= 0x0080 && code <= 0x07FF) {
-                    // 双字节
-                    // U+00000080 – U+000007FF 	110xxxxx 10xxxxxx
-                    // 110xxxxx
+                   
+                 
+                   
                     var byte1 = 0xC0 | ((code >> 6) & 0x1F);
-                    // 10xxxxxx
+                   
                     var byte2 = 0x80 | (code & 0x3F);
                     res.push(
                         String.fromCharCode(byte1),
                         String.fromCharCode(byte2)
                     );
                 } else if (code >= 0x0800 && code <= 0xFFFF) {
-                    // 三字节
-                    // U+00000800 – U+0000FFFF 	1110xxxx 10xxxxxx 10xxxxxx
-                    // 1110xxxx
+                   
                     var byte1 = 0xE0 | ((code >> 12) & 0x0F);
-                    // 10xxxxxx
+                    
                     var byte2 = 0x80 | ((code >> 6) & 0x3F);
-                    // 10xxxxxx
+                 
                     var byte3 = 0x80 | (code & 0x3F);
                     res.push(
                         String.fromCharCode(byte1),
@@ -365,14 +354,11 @@
                         String.fromCharCode(byte3)
                     );
                 } else if (code >= 0x00010000 && code <= 0x001FFFFF) {
-                    // 四字节
-                    // U+00010000 – U+001FFFFF 	11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+                   
                 } else if (code >= 0x00200000 && code <= 0x03FFFFFF) {
-                    // 五字节
-                    // U+00200000 – U+03FFFFFF 	111110xx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
+                   
                 } else /** if (code >= 0x04000000 && code <= 0x7FFFFFFF)*/ {
-                    // 六字节
-                    // U+04000000 – U+7FFFFFFF 	1111110x 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
+                  
                 }
             }
 
@@ -383,22 +369,19 @@
             var i = 0;
             for (var i = 0; i < len; i++) {
                 var code = str.charCodeAt(i);
-                // 对第一个字节进行判断
+              
                 if (((code >> 7) & 0xFF) == 0x0) {
-                    // 单字节
-                    // 0xxxxxxx
+                  
                     res.push(str.charAt(i));
                 } else if (((code >> 5) & 0xFF) == 0x6) {
-                    // 双字节
-                    // 110xxxxx 10xxxxxx
+                  
                     var code2 = str.charCodeAt(++i);
                     var byte1 = (code & 0x1F) << 6;
                     var byte2 = code2 & 0x3F;
                     var utf16 = byte1 | byte2;
                     res.push(Sting.fromCharCode(utf16));
                 } else if (((code >> 4) & 0xFF) == 0xE) {
-                    // 三字节
-                    // 1110xxxx 10xxxxxx 10xxxxxx
+                   
                     var code2 = str.charCodeAt(++i);
                     var code3 = str.charCodeAt(++i);
                     var byte1 = (code << 4) | ((code2 >> 2) & 0x0F);
@@ -406,14 +389,11 @@
                     var utf16 = ((byte1 & 0x00FF) << 8) | byte2
                     res.push(String.fromCharCode(utf16));
                 } else if (((code >> 3) & 0xFF) == 0x1E) {
-                    // 四字节
-                    // 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+                   
                 } else if (((code >> 2) & 0xFF) == 0x3E) {
-                    // 五字节
-                    // 111110xx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
-                } else /** if (((code >> 1) & 0xFF) == 0x7E)*/ {
-                    // 六字节
-                    // 1111110x 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
+                  
+                } else {
+                   
                 }
             }
 
@@ -423,21 +403,21 @@
             if (!str) {
                 return '';
             }
-            var utf8 = this.UTF16ToUTF8(str); // 转成UTF8
-            var i = 0; // 遍历索引
+            var utf8 = this.UTF16ToUTF8(str); 
+            var i = 0; 
             var len = utf8.length;
             var res = [];
             while (i < len) {
                 var c1 = utf8.charCodeAt(i++) & 0xFF;
                 res.push(this.table[c1 >> 2]);
-                // 需要补2个=
+             
                 if (i == len) {
                     res.push(this.table[(c1 & 0x3) << 4]);
                     res.push('==');
                     break;
                 }
                 var c2 = utf8.charCodeAt(i++);
-                // 需要补1个=
+               
                 if (i == len) {
                     res.push(this.table[((c1 & 0x3) << 4) | ((c2 >> 4) & 0x0F)]);
                     res.push(this.table[(c2 & 0x0F) << 2]);
@@ -498,8 +478,7 @@
             return unescape(r[2]);
         } else {
             return window.location.pathname.replace("/", "*");
-            //注意代码中的/ohhbilibiliyyds/wuyuan/codemakeall/和跳转地址/ohhbilibiliyyds/wuyuan/codemakeall/保持一致，请记得自行修改！
-        }
+              }
     }
     massage = GetQueryString("massage");
     massage = Base64.decode(massage);
